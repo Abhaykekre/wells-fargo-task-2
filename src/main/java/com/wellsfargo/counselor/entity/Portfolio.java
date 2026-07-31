@@ -1,65 +1,47 @@
 package com.wellsfargo.counselor.entity;
-import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 
-import java.time.LocalDate;
-import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Portfolio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long portfolioId;
+    @GeneratedValue()
+    private long portfolioId;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
     private Client client;
 
-    @Column(name = "creation_date")
-    private LocalDate creationDate;
+    @Column(nullable = false)
+    private String creationDate;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
-    private List<Security> securities;
+    protected Portfolio() {
 
-    public Portfolio() {
     }
 
-    public Portfolio(Client client, LocalDate creationDate, List<Security> securities) {
+    public Portfolio(Client client, String creationDate) {
         this.client = client;
         this.creationDate = creationDate;
-        this.securities = securities;
     }
 
-    // Getters
     public Long getPortfolioId() {
         return portfolioId;
     }
 
-    public Client getClient() {
+    public Client getCLient() {
         return client;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public List<Security> getSecurities() {
-        return securities;
-    }
-
-    // Setters
     public void setClient(Client client) {
         this.client = client;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public void setSecurities(List<Security> securities) {
-        this.securities = securities;
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 }
